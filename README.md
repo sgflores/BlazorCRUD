@@ -3,13 +3,15 @@
 
 CRUD Example using Blazor
 
-<img src="https://sgflores/BlazorCRUD/master/Client/wwwroot/Capture.PNG" />
+<img src="https://github.com/sgflores/BlazorCRUD/blob/master/Client/wwwroot/Capture.PNG" />
+
 
 ## Code Coverage
 1. Entity Framework with DB Migration
 2. API Controller
 3. JavaScript interop
 4. Shared Components
+
 
 
 ## Dependencies
