@@ -1,2 +1,2 @@
 # BlazorCRUD
-CRUD Application using Blazor Web Assembly
+CRUD Example using Blazor
