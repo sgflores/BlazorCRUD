@@ -1,0 +1,80 @@
+﻿@page "/people"
+@inject HttpClient httpClient
+@inject IJSRuntime js
+
+    <h1>People Master List</h1>
+
+    <a class="btn btn-success" href="/people/create">New Person</a>
+    <br />
+
+
+    @if(people == null)
+    {
+        <p>Loading...</p>
+    } 
+    else if(people.Length == 0) 
+    {
+        <p>No Record(s) Found!</p>
+    }
+    else 
+    {
+        
+        <table class="table table-bordered table-hover">
+
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>Id</td>
+                    <td>Name</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach(var person in people)
+                    {
+
+                        <tr>
+
+                            <td>
+                                <a class="btn btn-success" href="/people/edit/@person.Id">Edit</a>
+                                <button class="btn btn-danger" @onclick="@(() => DeletePerson(person))">Delete</button>
+                            </td>
+                            <td>@person.Id</td>
+                            <td>@person.Name</td>
+
+                        </tr>
+
+
+                    }
+            </tbody>
+
+        </table>
+
+    }
+
+
+@code {
+
+    Person [] people { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        await LoadPeople();
+    }
+
+
+    public async Task LoadPeople()
+    {
+        people = await httpClient.GetJsonAsync<Person[]>("/api/Person");
+    }
+
+    public async Task DeletePerson(Person person)
+    {
+        if (await js.InvokeAsync<bool>("confirm", $"Do you want to delete {person.Name}"))
+        {
+            await httpClient.DeleteAsync($"/api/Person/{person.Id}");
+            await LoadPeople();
+        }
+    }
+
+}

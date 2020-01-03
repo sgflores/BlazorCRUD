@@ -1,0 +1,20 @@
+﻿@page "/people/create"
+@inject HttpClient httpClient
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager
+
+<h3>New Person</h3>
+
+
+<PersonForm person="@person" ButtonText="Save Person" onValidSubmit="@savePerson" ></PersonForm>
+
+@code {
+
+    Person person = new Person();
+
+    public async Task savePerson()
+    {
+        await httpClient.PostJsonAsync("/api/Person", person);
+        navigationManager.NavigateTo("people");
+    }
+
+}
